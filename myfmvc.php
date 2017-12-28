@@ -16,6 +16,7 @@ define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
 error_reporting(E_ALL ^ E_NOTICE);
 
 if(IS_CLI){
+    global  $argv;
     //通过cli命令行访问
     $count = count($argv);
     if($count>=1){
