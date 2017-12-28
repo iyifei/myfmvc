@@ -5,8 +5,7 @@
  * Date: 17/2/22
  * Time: 下午8:20
  */
-use Myf\Constants\ErrorCode;
-use Myf\Libs\CmsException;
+use Myf\Libs\MyfException;
 use Myf\Libs\DB;
 use Myf\Libs\Utils;
 
@@ -514,7 +513,7 @@ function requestNotEmpty($name) {
         $value = $_REQUEST[$name];
         return $value;
     } else {
-        CmsException::throwExp($name . " is not empty", ErrorCode::PARAM_ERROR);
+        MyfException::throwExp($name . " is not empty", MyfException::PARAM_ERROR);
     }
 }
 

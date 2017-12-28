@@ -55,14 +55,13 @@ class ConnDao {
             $conn->id=$dbName;
             $conn->table_prefix=$db['prefix'];
             $conn->database = $database;
-            $base = config('base.log');
             $showLog = config('base.log.show_sql');
             if($showLog){
                 Log::sql(sprintf("\033[34m create pdo conn dns \033[0m =【%s】,ct=【%sms】",$dsn,(Utils::getMillisecond()-$startTime)));
             }
             return $conn;
         }else{
-            CmsException::throwExp(sprintf("[%s]数据库配置文件不存在",$dbName));
+            MyfException::throwExp(sprintf("[%s]数据库配置文件不存在",$dbName));
         }
     }
 

@@ -92,9 +92,13 @@ class Controller {
         $this->_response->ajaxReturn($data,'JSON');
     }
 
+    /**
+     * 输出正常json结果
+     * @param $data
+     */
     public function echoSuccess($data){
         $res = [
-            'status'=>0,
+            'status'=>MyfException::SUCCESS_CODE,
             'data'=>$data,
         ];
         $this->echoJson($res);

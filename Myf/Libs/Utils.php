@@ -409,7 +409,7 @@ class Utils {
             $strArr[] = $key . "#" . rawurlencode($value);//对空格的处理，urlencode处理成“+”，rawurlencode处理成“%20”
         }
         $str = sprintf("token=%s,values=%s", $token, join(",", $strArr));
-        Log::w(['token'=>$token,'params'=>$params]);
+        Log::write(self::jsonEncode(['token'=>$token,'params'=>$params]));
         return md5(sprintf("%s,%s",md5($str),$clientKey));
     }
 

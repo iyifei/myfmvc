@@ -22,7 +22,7 @@ class Xcrypt
      */
     public static function encrypt($obj){
         $data = Utils::enSerialize($obj);
-        $iv = mcrypt_create_iv(16);
+        $iv = mcrypt_create_iv(32);
         $password = Utils::enSerialize($iv);
         $encrypted = openssl_encrypt($data,self::METHOD,$password,OPENSSL_RAW_DATA,$iv);
         $res = [
