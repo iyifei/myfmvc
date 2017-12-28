@@ -17,7 +17,7 @@ class Image {
      * @return string
      */
     public static function makeCertificate($data) {
-        $sitePath = BASE_DIR;
+        $sitePath = APP_DIR;
         //1.配置图片路径
         $src = sprintf("%s/%s", $sitePath, 'template.jpg');
         //2.获取图片信息
@@ -88,7 +88,7 @@ class Image {
 
     public static function downImage($url, $fileName) {
 
-        $path = SYS_PATH;
+        $path = APP_DIR;
         $fileName = sprintf("%s/%s",$path,$fileName);
         if(is_file($fileName)){
             return true;

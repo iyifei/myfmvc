@@ -28,3 +28,8 @@ foreach ($iniFiles as $iniFile) {
     $cs[$firstName] = include $file;
     $_gblConfig = array_merge($_gblConfig,$cs);
 }
+$namespaces = config('namespace.autoload');
+if(!empty($namespaces)){
+    $_gblNamespaces = $namespaces;
+    spl_autoload_register("loader");
+}
