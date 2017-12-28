@@ -70,7 +70,7 @@ if(IS_CLI){
     $smt->left_delimiter = "{";
     $smt->right_delimiter = "}";
     //模板目录，模板命名为方法名驼峰转下划线，再小写
-    $tmpDir = APP_PATH . "/tpl/";
+    $tmpDir = APP_PATH . "/View/";
     //模板编译缓存目录
     $tmpPath = config('base.smt.tmp_path');
     if (empty($tmpPath)) {
