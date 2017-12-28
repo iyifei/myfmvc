@@ -129,13 +129,16 @@ function loader($className) {
  * @return string
  */
 function getClassFile($className) {
-    global $_gblNamespaces;
+    $namespaces = config('namespace.autoload');
     $names = explode("\\", $className);
     $class = array_pop($names);
     $key = join("\\", $names);
+    $file = null;
     //系统命名空间
-    $path = $_gblNamespaces[$key];
-    $file = $path . "/" . $class . ".php";
+    if(!empty($namespaces) && isset($namespaces[$key])){
+        $path = $namespaces[$key];
+        $file = $path . "/" . $class . ".php";
+    }
     return $file;
 }
 
