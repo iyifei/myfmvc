@@ -12,7 +12,7 @@ mb_internal_encoding('UTF-8');
 //开启session
 session_start();
 //读取配置文件
-$iniFiles = @dir_files(SYS_PATH . '/config');
+$iniFiles = @dir_files(APP_PATH . '/config');
 $iniOpFiles = @dir_files(OP_CONF_DIR);
 $iniFiles = array_merge($iniFiles,$iniOpFiles);
 global $_gblConfig;

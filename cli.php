@@ -20,7 +20,7 @@ if($count>=2){
     }
     $actionName = $actionName."Action";
     $className = $controllerName."Task";
-    $fileName = SYS_PATH."/task/".$className.".php";
+    $fileName = APP_PATH."/task/".$className.".php";
     if(file_exists($fileName)){
         include_once($fileName);
         $task = new $className();

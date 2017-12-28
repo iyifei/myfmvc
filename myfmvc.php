@@ -32,18 +32,18 @@ $smt = new \Smarty();
 $smt->left_delimiter = "{";
 $smt->right_delimiter = "}";
 //模板目录，模板命名为方法名驼峰转下划线，再小写
-$tmpDir = SYS_PATH."/tpl/";
+$tmpDir = APP_PATH."/tpl/";
 //模板编译缓存目录
 $tmpPath = config('base.smt.tmp_path');
 if(empty($tmpPath)){
-    $tmpPath = SYS_PATH.'/_smt';
+    $tmpPath = APP_PATH.'/_smt';
 }
 $htmlPath = config('base.html.path');
 if(empty($htmlPath)){
-    $htmlPath = SYS_PATH."/_html";
+    $htmlPath = APP_PATH."/_html";
 }
 define('HTML_PATH',$htmlPath);
-define('CACHE_PATH',SYS_PATH.'_cache');
+define('CACHE_PATH',APP_PATH.'_cache');
 $cmpDir = $tmpPath."/app/tpl_c";
 $smt->setTemplateDir($tmpDir)->setCompileDir($cmpDir);
 //目录
@@ -62,11 +62,11 @@ $mvcAction = $route['a'].'Action';
 //控制器文件命名雇主为: XxxController
 $mvcControllerFileName = $mvcController.'Controller';
 //家政控制器文件
-$mvcControllerFile = sprintf("%s/controller/Mvc/%s.php",APP_DIR,$mvcControllerFileName);
+$mvcControllerFile = sprintf("%s/Controller/%s.php",APP_PATH,$mvcControllerFileName);
 if(file_exists($mvcControllerFile)){
     try{
         require_once $mvcControllerFile;
-        $mvcControllerFileName = sprintf("\Myf\Controller\Mvc\%s",$mvcControllerFileName);
+        $mvcControllerFileName = sprintf("\Controller\%s",$mvcControllerFileName);
         $myfC = new $mvcControllerFileName();
         //初始化系统方法
         $myfC->_sys_init_action($route);

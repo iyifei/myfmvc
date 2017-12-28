@@ -90,7 +90,7 @@ class Log {
     private static function _getLogPath() {
         $path = config('base.log.path');
         if (empty($path)) {
-            $path = SYS_PATH . '/_logs';
+            $path = APP_PATH . '/_logs';
         }
         return $path;
     }
