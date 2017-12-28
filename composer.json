@@ -1,6 +1,6 @@
 {
   "name": "iyifei/myfmvc",
-  "type": "project",
+  "type": "library",
   "license": "MIT",
   "authors": [
     {
