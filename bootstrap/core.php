@@ -11,11 +11,6 @@ date_default_timezone_set('PRC');
 mb_internal_encoding('UTF-8');
 //开启session
 session_start();
-//系统路径
-define('APP_SYS_PATH', dirname(__FILE__));
-define('SYS_PATH', dirname(APP_SYS_PATH));
-define('COMMON_PATH', SYS_PATH );
-//引用全局函数
 //读取配置文件
 $iniFiles = @dir_files(SYS_PATH . '/config');
 $iniOpFiles = @dir_files(OP_CONF_DIR);

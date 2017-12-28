@@ -9,12 +9,6 @@
     }
   ],
   "minimum-stability": "dev",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/iyifei/myfmvc"
-    }
-  ],
   "require": {
     "smarty/smarty": "3.1.30"
   },
@@ -25,7 +19,8 @@
     },
     "files": [
       "bootstrap/functions.php",
-      "bootstrap/core.php"
+      "bootstrap/core.php",
+      "myfmvc.php"
     ]
   },
   "config": {
