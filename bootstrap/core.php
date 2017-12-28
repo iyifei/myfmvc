@@ -33,6 +33,3 @@ foreach ($iniFiles as $iniFile) {
     $cs[$firstName] = include $file;
     $_gblConfig = array_merge($_gblConfig,$cs);
 }
-
-//use composer autoloader to load vendor classes
-include_once SYS_PATH . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
