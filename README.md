@@ -35,7 +35,7 @@ php编写的简单mvc框架
 
 #### 2、创建对应的项目依赖目录，结构如下：
 
-![img](http://chuantu.biz/t6/189/1514453112x-1566638271.png)
+![img](http://chuantu.biz/t6/213/1516760251x-1404793274.png)
 
 #### 3、Common/Config目录下创建两个文件：
 db.config.php
