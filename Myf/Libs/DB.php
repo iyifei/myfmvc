@@ -463,7 +463,7 @@ class DB {
         }
         if (!$ok) {
             Log::sql(sprintf("ERROR err=【%s】", jsonCNEncode($stmt->errorInfo())), Log::ERROR);
-            CmsException::throwExp(jsonCNEncode($stmt->errorInfo()));
+            MyfException::throwExp(jsonCNEncode($stmt->errorInfo()));
         }
         return $res;
     }
