@@ -37,7 +37,7 @@ php编写的简单mvc框架
 
 ![img](http://chuantu.biz/t6/189/1514453112x-1566638271.png)
 
-#### 3、在App/Config目录下创建两个文件：
+#### 3、Common/Config目录下创建两个文件：
 db.config.php
 ```php
 
@@ -63,7 +63,6 @@ return array(
 );
 
 ```
-
 namespace.config.php
 
 ```php
@@ -72,9 +71,9 @@ namespace.config.php
  * 命名空间配置文件
  */
 return [
-    'autoload'=>[
-        "Model" => APP_PATH . "/Model",
-    ]
+   'autoload'=>[
+       "Common\Model" => SYS_PATH . "/Common/Model",
+   ]
 ];
 
 ```
@@ -89,11 +88,11 @@ return [
  * Time: 11:44
  */
 
-define('APP_PATH', __DIR__.'/App');
-define('COMMON_PATH', __DIR__.'/Common');
-//运维相关配置
+define('APP_PATH', __DIR__.'/');
+define("SYS_PATH",dirname(APP_PATH));
+define('COMMON_PATH', SYS_PATH.'/Common/');
 define('OP_CONF_DIR','/data/www/opconfig/');
-require_once 'vendor/autoload.php';
+require_once SYS_PATH.'/vendor/autoload.php';
 
 ```
 #### 5、配置nginx
@@ -103,7 +102,7 @@ require_once 'vendor/autoload.php';
 server {
     listen       80;
     server_name mvc.myf.cn;
-    root /data/www/myfmvc-demo/;
+    root /data/www/myfmvc-demo/App;
     index index.php index.html index.htm;
 
     location / {
@@ -131,7 +130,7 @@ server {
 
 namespace Controller;
 
-use Model\UserModel;
+use Common\Model\UserModel;
 use Myf\Libs\Controller;
 
 /**
@@ -160,6 +159,10 @@ class IndexController extends Controller
 
 #### 7、浏览器输入访问：
 http://XXX/index/test
+
+#### 8、脚本访问
+进入App目录，执行
+php index.php test/abc
 
 
 ### 针对此项目也写了个demo，欢迎大家下载使用
