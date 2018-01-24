@@ -68,7 +68,7 @@ if(IS_CLI){
     //配置session方式
     $sessionConfig = config('session.redis');
     if(!empty($sessionConfig)){
-        $sRedis = \Myf\Libs\Redis::getInstance();
+        $sRedis = \Myf\Libs\Redis::getInstance(null,$sessionConfig);
         $redisSession = new RedisSession($sRedis);
         $redisSession->register();
     }
