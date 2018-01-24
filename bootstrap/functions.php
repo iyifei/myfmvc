@@ -288,7 +288,7 @@ function getProjectURL() {
  * @param string $value
  */
 function session($name, $value = '') {
-    $prefix = "_kuxue_cms_";
+    $prefix = "_myfmvc_";
     if ('' === $value) {
         if (0 === strpos($name, '[')) {// session 操作
             if ('[pause]' == $name) {// 暂停session
