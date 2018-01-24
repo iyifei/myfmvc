@@ -9,8 +9,6 @@
 date_default_timezone_set('PRC');
 //统一编码为utf8
 mb_internal_encoding('UTF-8');
-//开启session
-session_start();
 //读取配置文件
 $iniFiles = @dir_files(COMMON_PATH . '/Config');
 $iniOpFiles = @dir_files(OP_CONF_DIR);

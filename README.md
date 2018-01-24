@@ -121,6 +121,7 @@ server {
 
 }
 
+
 ```
 
 #### 6、在Controller目录下创建IndexController.php

@@ -17,12 +17,15 @@ class Redis
     /**
      * 获取redis的单利
      * @param int $db
+     * @param array $config 配置，可选，默认是读取redis.dsn
      * @return mixed|\Redis
      * @throws \Exception
      */
-    public static function getInstance($db = null)
+    public static function getInstance($db = null,$config=[])
     {
-        $config = config("redis.dsn");
+        if(empty($config)){
+            $config = config("redis.dsn");
+        }
         if(!isset($db)){
             $db = $config['db'];
         }
@@ -43,6 +46,5 @@ class Redis
         self::$_instances[$db] = $instance;
         return $instance;
     }
-
 
 }

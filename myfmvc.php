@@ -8,6 +8,7 @@
 
 
 use Myf\Libs\Log;
+use Myf\Libs\RedisSession;
 use Myf\Libs\Response;
 use Myf\Libs\Utils;
 
@@ -63,6 +64,17 @@ if(IS_CLI){
     define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false);
     define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
     register_shutdown_function('shutdown');
+
+    //配置session方式
+    $sessionConfig = config('session.redis');
+    if(!empty($sessionConfig)){
+        $sRedis = \Myf\Libs\Redis::getInstance();
+        $redisSession = new RedisSession($sRedis);
+        $redisSession->register();
+    }
+    //开启session
+    session_start();
+
     Utils::getLogId(true);
     Utils::logRequestStart();
     //配置smarty
