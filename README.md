@@ -90,6 +90,7 @@ return [
  */
 
 define('APP_PATH', __DIR__.'/App');
+define('COMMON_PATH', __DIR__.'/Common');
 //运维相关配置
 define('OP_CONF_DIR','/data/www/opconfig/');
 require_once 'vendor/autoload.php';
