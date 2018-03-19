@@ -326,8 +326,10 @@ function session($name, $value = '') {
         }
     } elseif (is_null($value)) {// 删除session
         if ($prefix) {
+            $_SESSION[$prefix][$name]=null;
             unset($_SESSION[$prefix][$name]);
         } else {
+            $_SESSION[$name]=null;
             unset($_SESSION[$name]);
         }
     } else {// 设置session
@@ -463,11 +465,11 @@ function getClientIP() {
  */
 function get($name, $default = null) {
     if (isset($_GET[$name])) {
-        $value = $_GET[$name];
+        $value = trim($_GET[$name]);
     } else {
         $value = $default;
     }
-    return trim($value);
+    return $value;
 }
 
 
@@ -479,11 +481,11 @@ function get($name, $default = null) {
  */
 function post($name, $default = null) {
     if (isset($_POST[$name])) {
-        $value = $_POST[$name];
+        $value = trim($_POST[$name]);
     } else {
         $value = $default;
     }
-    return trim($value);
+    return $value;
 }
 
 
@@ -495,11 +497,11 @@ function post($name, $default = null) {
  */
 function request($name, $default = null) {
     if (isset($_REQUEST[$name])) {
-        $value = $_REQUEST[$name];
+        $value = trim($_REQUEST[$name]);
     } else {
         $value = $default;
     }
-    return trim($value);
+    return $value;
 }
 
 
@@ -1254,4 +1256,107 @@ function weekday($year, $week = 1) {
     $weekday['start'] = date("Y-m-d", $weekday['start']);
     $weekday['end'] = date("Y-m-d", $weekday['end']);
     return $weekday;
+}
+
+/**
+ * 判断是否在微信中
+ * @return bool
+ */
+function isInWeixin(){
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    if (strpos($user_agent, 'MicroMessenger') === false) {
+        // 非微信浏览器禁止浏览\
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/**
+ * 根据身份证计算年龄
+ * @param $id
+ * @return float|string
+ */
+function getAgeByCardID($id){
+    //过了这年的生日才算多了1周岁
+    if(empty($id)) return '';
+    $date=strtotime(substr($id,6,8));
+    //获得出生年月日的时间戳
+    $today=strtotime('today');
+    //获得今日的时间戳
+    $diff=floor(($today-$date)/86400/365);
+    //得到两个日期相差的大体年数
+
+    //strtotime加上这个年数后得到那日的时间戳后与今日的时间戳相比
+    $age=strtotime(substr($id,6,8).' +'.$diff.'years')>$today?($diff+1):$diff;
+
+    return $age;
+}
+
+//用php从身份证中提取生日,包括15位和18位身份证
+function getIDCardInfo($IDCard) {
+    $result['error'] = 0;//0：未知错误，1：身份证格式错误，2：无错误
+    $result['flag'] = '';//0标示成年，1标示未成年
+    $result['tdate'] = '';//生日，格式如：2012-11-15
+    if (!@eregi("^[1-9]([0-9a-zA-Z]{17}|[0-9a-zA-Z]{14})$", $IDCard)) {
+        $result['error'] = 1;
+        return $result;
+    } else {
+        if (strlen($IDCard) == 18) {
+            $tyear = intval(substr($IDCard, 6, 4));
+            $tmonth = intval(substr($IDCard, 10, 2));
+            $tday = intval(substr($IDCard, 12, 2));
+            if ($tyear > date("Y") || $tyear < (date("Y") - 100)) {
+                $flag = 0;
+            } elseif ($tmonth < 0 || $tmonth > 12) {
+                $flag = 0;
+            } elseif ($tday < 0 || $tday > 31) {
+                $flag = 0;
+            } else {
+                $tdate = $tyear . "-" . $tmonth . "-" . $tday ;
+                if ((time() - mktime(0, 0, 0, $tmonth, $tday, $tyear)) > 18 * 365 * 24 * 60 * 60) {
+                    $flag = 0;
+                } else {
+                    $flag = 1;
+                }
+            }
+        } elseif (strlen($IDCard) == 15) {
+            $tyear = intval("19" . substr($IDCard, 6, 2));
+            $tmonth = intval(substr($IDCard, 8, 2));
+            $tday = intval(substr($IDCard, 10, 2));
+            if ($tyear > date("Y") || $tyear < (date("Y") - 100)) {
+                $flag = 0;
+            } elseif ($tmonth < 0 || $tmonth > 12) {
+                $flag = 0;
+            } elseif ($tday < 0 || $tday > 31) {
+                $flag = 0;
+            } else {
+                $tdate = $tyear . "-" . $tmonth . "-" . $tday;
+                if ((time() - mktime(0, 0, 0, $tmonth, $tday, $tyear)) > 18 * 365 * 24 * 60 * 60) {
+                    $flag = 0;
+                } else {
+                    $flag = 1;
+                }
+            }
+        }
+        $tdate = date("Y-m-d",strtotime($tdate));
+    }
+    $result['error'] = 2;//0：未知错误，1：身份证格式错误，2：无错误
+    $result['isAdult'] = $flag;//0标示成年，1标示未成年
+    $result['birthday'] = $tdate ;//生日日期
+    return $result;
+}
+
+
+// 过滤掉emoji表情
+function filterEmoji($str)
+{
+    $str = preg_replace_callback(
+        '/./u',
+        function (array $match) {
+            return strlen($match[0]) >= 4 ? '' : $match[0];
+        },
+        $str);
+
+    return $str;
 }

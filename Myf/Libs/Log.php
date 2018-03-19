@@ -83,6 +83,17 @@ class Log {
         self::write($message, $level, self::FILE, $destination);
     }
 
+
+    /**
+     * 支付日志
+     * @param $message
+     * @param string $level
+     */
+    static function pay($message,$level=self::DEBUG){
+        $destination = "pay_" . date('y_m_d') . ".log";
+        self::write($message, $level, self::FILE, $destination);
+    }
+
     /**
      * 获取log日志输出目录
      * @return null

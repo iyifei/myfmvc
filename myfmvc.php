@@ -65,13 +65,13 @@ if(IS_CLI){
     define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
     register_shutdown_function('shutdown');
 
-    //配置session方式
-    $sessionConfig = config('session.redis');
-    if(!empty($sessionConfig)){
-        $sRedis = \Myf\Libs\Redis::getInstance(null,$sessionConfig);
-        $redisSession = new RedisSession($sRedis);
-        $redisSession->register();
-    }
+//    //配置session方式
+//    $sessionConfig = config('session.redis');
+//    if(!empty($sessionConfig)){
+//        $sRedis = \Myf\Libs\Redis::getInstance(null,$sessionConfig);
+//        $redisSession = new RedisSession($sRedis);
+//        $redisSession->register();
+//    }
     //开启session
     session_start();
 
@@ -127,12 +127,18 @@ if(IS_CLI){
             //执行后置函数
             $myfC->_after_action();
         } catch (\Exception $e) {
-            Log::error(($e->getMessage()));
+            Log::error(($e->getTraceAsString()));
             $res = [
                 'status' => $e->getCode(), 'error' => $e->getMessage(),
             ];
             session('returnData', $res);
-            (new Response())->ajaxReturn($res);
+            if(IS_AJAX){
+                (new Response())->ajaxReturn($res);
+            }else{
+                $smt->assign('title','出错了');
+                $smt->assign('error',$e->getMessage());
+                $smt->display(APP_PATH.'/View/common/error.html');
+            }
         }
     } else {
         echo '404';
