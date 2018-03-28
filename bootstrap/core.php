@@ -22,8 +22,24 @@ foreach ($iniFiles as $iniFile) {
     $fileArr = explode("/",$file);
     $fileName = end($fileArr);
     $fileNames = explode(".",$fileName);
-    $firstName = current($fileNames);
-    $cs[$firstName] = include $file;
-    $_gblConfig = array_merge($_gblConfig,$cs);
+    $c = count($fileNames);
+    $cs = [];
+    if($fileNames[$c-2]=='config'){
+        unset($fileNames[$c-1]);
+        unset($fileNames[$c-2]);
+        $data = include $file;
+        switch ($c){
+            case 3:
+                $cs[$fileNames[0]]=$data;
+                break;
+            case 4:
+                $cs[$fileNames[0]][$fileNames[1]]=$data;
+                break;
+            case 5:
+                $cs[$fileNames[0]][$fileNames[1]][$fileNames[2]]=$data;
+                break;
+        }
+        $_gblConfig = array_merge_recursive($_gblConfig,$cs);
+    }
 }
 spl_autoload_register("loader");
